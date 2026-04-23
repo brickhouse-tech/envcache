@@ -1,0 +1,43 @@
+{
+  "name": "@brickhouse-tech/envcache",
+  "version": "0.1.0",
+  "description": "Cache environment secrets from 1Password (and other secret managers) with TTL, first-login-of-day refresh, and force flag.",
+  "keywords": [
+    "envcache",
+    "envrc",
+    "1password",
+    "op",
+    "secrets",
+    "cache",
+    "environment",
+    "dotenv"
+  ],
+  "homepage": "https://github.com/brickhouse-tech/envcache#readme",
+  "bugs": {
+    "url": "https://github.com/brickhouse-tech/envcache/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brickhouse-tech/envcache.git"
+  },
+  "author": "Nicholas McCready",
+  "license": "MIT",
+  "bin": {
+    "envcache": "src/sh/envcache.sh"
+  },
+  "files": [
+    "src/**/*"
+  ],
+  "scripts": {
+    "lint": "shellcheck src/sh/*.sh",
+    "test": "npx bats test/",
+    "prepublishOnly": "npm run lint && npm test"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20",
+    "@commitlint/config-conventional": "^20",
+    "commitlint": "20",
+    "shellcheck": "^4.1.0",
+    "sort-package-json": ">=3"
+  }
+}

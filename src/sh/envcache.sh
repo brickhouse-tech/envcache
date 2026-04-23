@@ -28,6 +28,18 @@
 
 set -euo pipefail 2>/dev/null || true  # best-effort in sourced context
 
+# ── Cross-platform file hash ──
+_envcache_hash() {
+  if command -v md5 > /dev/null 2>&1; then
+    md5 -q "$1"
+  elif command -v md5sum > /dev/null 2>&1; then
+    md5sum "$1" | cut -d' ' -f1
+  else
+    # Fallback: use cksum
+    cksum "$1" | cut -d' ' -f1
+  fi
+}
+
 # ── Configuration ──
 _ENVCACHE_SECRETS="${ENVCACHE_SECRETS_FILE:-$HOME/.envcache.secrets}"
 _ENVCACHE_CACHE="${ENVCACHE_CACHE_FILE:-$HOME/.envrc.cache}"
@@ -53,7 +65,7 @@ _envcache_needs_refresh() {
   today=$(date +%Y-%m-%d)
 
   # Secrets file changed (new secrets added/removed)
-  current_hash=$(md5 -q "$_ENVCACHE_SECRETS" 2>/dev/null || md5sum "$_ENVCACHE_SECRETS" | cut -d' ' -f1)
+  current_hash=$(_envcache_hash "$_ENVCACHE_SECRETS")
   [[ "$cached_hash" != "$current_hash" ]] && return 0
 
   # First login of the day
@@ -100,8 +112,7 @@ _envcache_resolve() {
     fi
 
     local value
-    value=$(op read "$opuri" 2>/dev/null)
-    if [[ $? -ne 0 ]]; then
+    if ! value=$(op read "$opuri" 2>/dev/null); then
       echo "[envcache] WARNING: failed to resolve $varname" >&2
       ((errors++))
       continue
@@ -121,7 +132,7 @@ _envcache_resolve() {
 
   # Write meta: date, timestamp, secrets file hash
   local current_hash
-  current_hash=$(md5 -q "$_ENVCACHE_SECRETS" 2>/dev/null || md5sum "$_ENVCACHE_SECRETS" | cut -d' ' -f1)
+  current_hash=$(_envcache_hash "$_ENVCACHE_SECRETS")
   printf '%s\n%s\n%s\n' "$(date +%Y-%m-%d)" "$(date +%s)" "$current_hash" > "$_ENVCACHE_META"
   chmod 600 "$_ENVCACHE_META"
 
@@ -154,9 +165,10 @@ fi
 
 # Source the cache (exports all secrets into current shell)
 if [[ -f "$_ENVCACHE_CACHE" ]]; then
+  # shellcheck source=/dev/null
   source "$_ENVCACHE_CACHE"
 fi
 
 # ── Cleanup (don't pollute shell namespace) ──
-unset -f _envcache_needs_refresh _envcache_resolve _envcache_age
+unset -f _envcache_needs_refresh _envcache_resolve _envcache_age _envcache_hash
 unset _ENVCACHE_SECRETS _ENVCACHE_CACHE _ENVCACHE_META _ENVCACHE_TTL

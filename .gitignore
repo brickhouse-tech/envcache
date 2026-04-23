@@ -1,3 +1,33 @@
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage directory
+coverage
+
+# Dependency directory
+node_modules
+tmp
+temp
+
+yarn.lock
+dist/
+
+# Agent tool artifacts
+.cursor/
+.codex/
+.claude/
+.windsurf/
+.github/copilot/
+CLAUDE.md
+
 # Cache files (contain plaintext secrets)
 *.cache
 *.cache.meta
@@ -6,9 +36,6 @@
 .envcache.secrets
 envcache.secrets
 
-# OS
-.DS_Store
-
-# Rust (for future)
+# Rust (future)
 /target/
 Cargo.lock

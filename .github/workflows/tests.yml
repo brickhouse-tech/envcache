@@ -1,0 +1,39 @@
+name: tests
+
+on:
+  workflow_call:
+  pull_request:
+    branches: ["main"]
+    paths-ignore:
+      - '.devcontainer/**'
+      - '.github/workflows/**'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - run: npm install
+      - run: npm run lint
+      - run: npm test
+
+  tests:
+    name: tests
+    needs: [test]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check test results
+        run: |
+          results=($(echo '${{ toJSON(needs.*.result) }}' | jq -r '.[]'))
+          for r in "${results[@]}"; do
+            if [[ "$r" != "success" ]]; then
+              echo "One or more jobs failed: $r"
+              exit 1
+            fi
+          done
+          echo "All jobs passed"
