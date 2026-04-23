@@ -131,13 +131,21 @@ pub fn cache_age(config: &Config) -> Result<String> {
 }
 
 /// Read the meta file.
+///
+/// Tolerates blank lines and legacy 2-line meta files (pre-Rust versions
+/// wrote only date + timestamp, no secrets hash). A missing hash is treated
+/// as empty, which forces a refresh via hash mismatch.
 fn read_meta(config: &Config) -> Result<CacheMeta> {
     let content = fs::read_to_string(&config.meta_file)
         .with_context(|| format!("failed to read meta: {}", config.meta_file))?;
 
-    let lines: Vec<&str> = content.lines().collect();
-    if lines.len() < 3 {
-        anyhow::bail!("malformed meta file: expected 3 lines, got {}", lines.len());
+    let lines: Vec<&str> = content.lines().filter(|l| !l.trim().is_empty()).collect();
+
+    if lines.len() < 2 {
+        anyhow::bail!(
+            "malformed meta file: expected at least 2 lines (date, timestamp), got {}",
+            lines.len()
+        );
     }
 
     Ok(CacheMeta {
@@ -145,6 +153,6 @@ fn read_meta(config: &Config) -> Result<CacheMeta> {
         timestamp: lines[1]
             .parse()
             .with_context(|| "failed to parse timestamp from meta")?,
-        secrets_hash: lines[2].to_string(),
+        secrets_hash: lines.get(2).unwrap_or(&"").to_string(),
     })
 }
