@@ -1,15 +1,11 @@
 name: release
 
-# Disabled until repo is public — prevents auto-tagging which triggers publish
-# on:
-#   push:
-#     branches: ["main"]
-#     paths-ignore:
-#       - '.devcontainer/**'
-#     tags-ignore: ['**']
-
 on:
-  workflow_dispatch: # manual only for now
+  push:
+    branches: ["main"]
+    paths-ignore:
+      - '.devcontainer/**'
+    tags-ignore: ['**']
 
 jobs:
   tests:
