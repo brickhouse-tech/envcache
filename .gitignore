@@ -1,0 +1,14 @@
+# Cache files (contain plaintext secrets)
+*.cache
+*.cache.meta
+
+# User's actual secrets file
+.envcache.secrets
+envcache.secrets
+
+# OS
+.DS_Store
+
+# Rust (for future)
+/target/
+Cargo.lock
