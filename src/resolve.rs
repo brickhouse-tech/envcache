@@ -43,25 +43,8 @@ fn resolve_one(op_uri: &str) -> Result<String> {
 }
 
 /// Apply a post-processor to a resolved value.
-fn apply_post_processor(value: &str, processor: &PostProcessor) -> String {
+pub fn apply_post_processor(value: &str, processor: &PostProcessor) -> String {
     match processor {
         PostProcessor::StripWhitespace => value.chars().filter(|c| !c.is_whitespace()).collect(),
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_strip_whitespace() {
-        let result = apply_post_processor("hello \n world\r\n", &PostProcessor::StripWhitespace);
-        assert_eq!(result, "helloworld");
-    }
-
-    #[test]
-    fn test_strip_whitespace_no_change() {
-        let result = apply_post_processor("clean-value", &PostProcessor::StripWhitespace);
-        assert_eq!(result, "clean-value");
     }
 }

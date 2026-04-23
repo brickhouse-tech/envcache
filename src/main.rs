@@ -1,11 +1,9 @@
-mod cache;
-mod config;
-mod resolve;
-mod secrets;
-
 use anyhow::Result;
 use clap::Parser;
-use config::Config;
+use envcache::cache;
+use envcache::config::Config;
+use envcache::resolve;
+use envcache::secrets;
 
 /// Cache environment secrets from 1Password (and other secret managers) with TTL.
 ///

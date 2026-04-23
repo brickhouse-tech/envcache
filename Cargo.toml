@@ -9,6 +9,11 @@ repository = "https://github.com/brickhouse-tech/envcache"
 readme = "README.md"
 keywords = ["env", "cache", "secrets", "1password", "dotenv"]
 categories = ["command-line-utilities", "development-tools"]
+exclude = ["tests/"]
+
+[lib]
+name = "envcache"
+path = "src/lib.rs"
 
 [[bin]]
 name = "envcache"
