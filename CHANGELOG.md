@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.2](https://github.com/brickhouse-tech/envcache/compare/v0.1.1...v0.1.2) (2026-04-23)
+
+
+### Features
+
+* add Rust CLI implementation ([f5fa9b5](https://github.com/brickhouse-tech/envcache/commit/f5fa9b5cc494f284b2da63c2df3b751ce3bccc93))
+
 ## 0.1.1 (2026-04-23)
 
 
