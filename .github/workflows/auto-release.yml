@@ -1,9 +1,13 @@
 name: auto-release
 
+# Disabled until repo is public
+# on:
+#   push:
+#     tags:
+#       - 'v*'
+
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch: # manual only for now
 
 jobs:
   tests:

@@ -1,9 +1,13 @@
 name: publish
 
+# Disabled until repo is public and ready for npm
+# on:
+#   push:
+#     tags:
+#       - "v*"
+
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch: # manual only for now
 
 jobs:
   tests:
