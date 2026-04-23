@@ -26,7 +26,9 @@
 #   4. ENVCACHE_FORCE=1
 #   5. Secrets file modified since last cache
 
-set -euo pipefail 2>/dev/null || true  # best-effort in sourced context
+# NOTE: Do NOT use `set -e` here — this script is sourced, and set -e in
+# sourced scripts causes silent exits on any non-zero return (e.g. arithmetic,
+# command -v checks). set -u is safe for catching typos.
 
 # ── Cross-platform file hash ──
 _envcache_hash() {
@@ -114,7 +116,7 @@ _envcache_resolve() {
     local value
     if ! value=$(op read "$opuri" 2>/dev/null); then
       echo "[envcache] WARNING: failed to resolve $varname" >&2
-      ((errors++))
+      errors=$((errors + 1))
       continue
     fi
 
@@ -127,7 +129,7 @@ _envcache_resolve() {
 
     # Write to cache (single-quote the value to prevent expansion)
     printf "export %s='%s'\n" "$varname" "$value" >> "$_ENVCACHE_CACHE"
-    ((total++))
+    total=$((total + 1))
   done < "$_ENVCACHE_SECRETS"
 
   # Write meta: date, timestamp, secrets file hash
