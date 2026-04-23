@@ -126,7 +126,13 @@ EOF
   "$TEST_DIR/run-envcache.sh" > /dev/null 2>&1
 
   local perms
-  perms=$(stat -f '%Lp' "$ENVCACHE_CACHE_FILE" 2>/dev/null || stat -c '%a' "$ENVCACHE_CACHE_FILE")
+  if stat -f '%Lp' /dev/null > /dev/null 2>&1; then
+    # macOS
+    perms=$(stat -f '%Lp' "$ENVCACHE_CACHE_FILE")
+  else
+    # Linux
+    perms=$(stat -c '%a' "$ENVCACHE_CACHE_FILE")
+  fi
   [ "$perms" = "600" ]
 }
 
