@@ -8,7 +8,8 @@ on:
       - '.devcontainer/**'
       - '.github/workflows/**'
 jobs:
-  test:
+  test-shell:
+    name: shell (lint + bats)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,9 +22,39 @@ jobs:
       - run: npm run lint
       - run: npm test
 
+  test-rust:
+    name: rust (fmt + clippy + test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache cargo registry and build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+      - name: Run clippy
+        run: cargo clippy -- -D warnings
+
+      - name: Run tests
+        run: cargo test
+
   tests:
     name: tests
-    needs: [test]
+    needs: [test-shell, test-rust]
     runs-on: ubuntu-latest
     if: always()
     steps:

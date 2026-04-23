@@ -36,6 +36,6 @@ CLAUDE.md
 .envcache.secrets
 envcache.secrets
 
-# Rust (future)
+# Rust build artifacts
 /target/
-Cargo.lock
+# Note: Cargo.lock IS committed — this is a binary, not a library
