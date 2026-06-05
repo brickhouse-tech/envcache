@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.6](https://github.com/brickhouse-tech/envcache/compare/v0.1.5...v0.1.6) (2026-06-05)
+
+## [0.1.5](https://github.com/brickhouse-tech/envcache/compare/v0.1.4...v0.1.5) (2026-05-12)
+
+## [0.1.4](https://github.com/brickhouse-tech/envcache/compare/v0.1.3...v0.1.4) (2026-04-24)
+
+
+### Bug Fixes
+
+* handle legacy 2-line meta and blank lines in meta parser ([c7102a2](https://github.com/brickhouse-tech/envcache/commit/c7102a22df38fa39c1eec5672262a9bbf738565b))
+
+## [0.1.3](https://github.com/brickhouse-tech/envcache/compare/v0.1.2...v0.1.3) (2026-04-23)
+
 ## [0.1.2](https://github.com/brickhouse-tech/envcache/compare/v0.1.1...v0.1.2) (2026-04-23)
 
 
