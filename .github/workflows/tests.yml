@@ -52,8 +52,8 @@ jobs:
       - name: Run tests
         run: cargo test
 
-  tests:
-    name: tests
+  test:
+    name: test
     needs: [test-shell, test-rust]
     runs-on: ubuntu-latest
     if: always()
@@ -68,3 +68,4 @@ jobs:
             fi
           done
           echo "All jobs passed"
+
