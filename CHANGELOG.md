@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.7](https://github.com/brickhouse-tech/envcache/compare/v0.1.6...v0.1.7) (2026-06-29)
+
+
+### Bug Fixes
+
+* remove redundant test fan-in job ([#7](https://github.com/brickhouse-tech/envcache/issues/7)) ([4c73cc8](https://github.com/brickhouse-tech/envcache/commit/4c73cc813d6baeff7d24ce35b86913ea07885eb0))
+
 ## [0.1.6](https://github.com/brickhouse-tech/envcache/compare/v0.1.5...v0.1.6) (2026-06-05)
 
 ## [0.1.5](https://github.com/brickhouse-tech/envcache/compare/v0.1.4...v0.1.5) (2026-05-12)
