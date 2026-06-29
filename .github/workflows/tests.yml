@@ -1,4 +1,4 @@
-name: tests
+name: ci
 
 on:
   workflow_call:
@@ -52,8 +52,8 @@ jobs:
       - name: Run tests
         run: cargo test
 
-  tests:
-    name: tests
+  gate:
+    name: gate
     needs: [test-shell, test-rust]
     runs-on: ubuntu-latest
     if: always()
@@ -68,4 +68,3 @@ jobs:
             fi
           done
           echo "All jobs passed"
-
