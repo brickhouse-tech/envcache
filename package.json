@@ -1,6 +1,6 @@
 {
   "name": "@brickhouse-tech/envcache",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Cache environment secrets from 1Password (and other secret managers) with TTL, first-login-of-day refresh, and force flag.",
   "keywords": [
     "envcache",
